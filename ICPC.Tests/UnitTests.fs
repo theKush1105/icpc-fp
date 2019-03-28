@@ -15,7 +15,7 @@ let ``Comma sprinkler, input 2`` () =
 
 [<Test>]
 let ``Comma sprinkler, input 3`` () =
-    commaSprinkler "test." |> should equal (Some "test")
+    commaSprinkler "test." |> should equal (Some "test.")
 
 [<Test>]
 let ``Comma sprinkler, error case 1`` () =
@@ -39,10 +39,14 @@ let ``Comma sprinkler, error case 4`` () =
     commaSprinkler "one,two. one tree." |> should equal None
     commaSprinkler "one ,two. one tree." |> should equal None
     commaSprinkler "one, two... one tree." |> should equal None
+    commaSprinkler "one, two. . one tree." |> should equal None
+    commaSprinkler "one, two. one tree ." |> should equal None
 
 [<Test>]
 let ``Comma sprinkler, error case 5`` () =
         commaSprinkler "one, two. one tree. " |> should equal None
+        commaSprinkler "one, two. one tree, " |> should equal None
+        commaSprinkler "one, two. one tree " |> should equal None
 
 [<Test>]
 let ``Rivers, input 1`` () =
@@ -76,3 +80,7 @@ let ``Rivers, error case 3`` () =
 let ``Rivers, error case 4`` () =
     rivers " hello world" |> should equal None
     rivers "hello world " |> should equal None
+
+[<Test>]
+let ``Rivers, error case 5`` () =
+    rivers "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabc test" |> should equal None
